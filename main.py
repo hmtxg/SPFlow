@@ -14,4 +14,6 @@ spn = 0.4 * (Categorical(p=[0.2, 0.8], scope=0) *
              Categorical(p=[0.4, 0.6], scope=2))
 
 
+jhjkfhahfuah
+
 plot_spn(spn, 'basicspn.png')
