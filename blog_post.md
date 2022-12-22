@@ -2,7 +2,7 @@
 
      **Sum-product networks (SPNs)** are a subcategory of mathematical models that have a wide variety of applications on complex systems, mainly probabilistic reasoning and other Bayesian inference. Probabilistic inference is the process of determining the probability of certain events occurring on the basis of observed data.  Graphical models represent the relationships between random variables, and allow the calculation of different event likelihoods from probability distributions. Sum-product networks get their name from their structure, a combination of sum and product nodes. Sum nodes represent the "sum" operation and allow the SPN to capture the inherent uncertainty or randomness in the data. Product nodes, on the other hand, represent the "product" operation and capture the dependencies between different random variables. 
 
-_SPN Structure Example (Poon & Domingos 2012)_
+SPN Structure Example _(Poon & Domingos 2012)_
 
 ![](https://lh6.googleusercontent.com/X2j2iEcky7x2syfIKyepIoyn3ZJgIAGWm0X0BXqcmht7np5XblGBuvninzu8MMQXsuOA_ZrkTNT6AwQD6Fr__sHgm7dSESqIDhrj-_mDUUdKd98YyP3mEvVcOgZ6vDpyVnj7D_8AbQ_3bHWduU2cLcvA2Aa1S9ZHkVB0-5-tSzcbdSdXMduSENaWRieOeA)
 
@@ -74,7 +74,7 @@ print(llm, np.exp(llm))
 
     While SPNs and ACs are similar, they are applied for different purposes and have some differences in their mathematical properties and expressive power. Both SPNs and ACs are used in a variety of applications, such as machine learning and computational complexity theory. SPNs are generally considered to be more efficient than ACs, because they can exploit the structure of the function being computed in order to reduce the computational complexity. Arithmetic circuits are used for performing complex mathematical computations, while sum-product networks are used for performing probabilistic inference and other types of statistical computations.
 
-_Logic Diagram of an Example Arithmetic Circuit (Sarangi et. al 2014)_
+Logic Diagram of an Example Arithmetic Circuit _(Sarangi et. al 2014)_
 
 ![](https://user-images.githubusercontent.com/103450057/209029925-57ee077d-501b-4f2b-9a34-1f1637f141c3.png)
 
@@ -82,7 +82,7 @@ _Logic Diagram of an Example Arithmetic Circuit (Sarangi et. al 2014)_
 
 ### _Neural Networks vs Sum-Product Networks_
 
- **Neural networks (NNs)** are a form of machine models that predict outcomes based on input data. One difference between SPNs and NNs is their structures, with the former utilizing graphs while the latter implements a layered architecture of interconnected nodes. SPNs utilize a structure learning algorithm that uncovers the relationships between variables without any prior knowledge. This is beneficial in applications where probabilistic reasoning is the main priority. Human brain structure and function inspire the structure of the NN model, which is composed of interconnected nodes used to represent data attributes. NNs make use of a combination of linear, and nonlinear, operations to compute predictions and represent the relationship between inputs and outputs. The operations are a wide variety of mathematical operations, including dot products and non-linear activation functions, to learn and transform the input data. 
+**Neural networks (NNs)** are a form of machine models that predict outcomes based on input data. One difference between SPNs and NNs is their structures, with the former utilizing graphs while the latter implements a layered architecture of interconnected nodes. SPNs utilize a structure learning algorithm that uncovers the relationships between variables without any prior knowledge. This is beneficial in applications where probabilistic reasoning is the main priority. Human brain structure and function inspire the structure of the NN model, which is composed of interconnected nodes used to represent data attributes. NNs make use of a combination of linear, and nonlinear, operations to compute predictions and represent the relationship between inputs and outputs. The operations are a wide variety of mathematical operations, including dot products and non-linear activation functions, to learn and transform the input data. 
 
    While SPNs are typically used for probabilistic inference, NNs are deployed in machine learning algorithms like classification, regression, and clustering.  Concerning explainability, SPNs are more interpretable and easily understood, while NNs are considered to be black box models due to their difficulty in visualizing the reasoning behind outputs. Even with their superior efficiency for specific problems, SPNs are less computationally expensive in comparison to NNs. However, NNs generally outperform SPNs on complex datasets. There are several training algorithms for SPNs that adjust the parameters of the network to maximize the likelihoods of observed data, while NNs employ backpropagation to adjust the connection weights between nodes to make predictions.
 
