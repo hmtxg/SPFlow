@@ -92,7 +92,7 @@ Basic Neural Network Structure _(Shukla 2019)_
 
     Both SPNs and NNs are types of machine learning algorithms, but the differences outlined between them make them more inclined to specific tasks. NNs are particularly well suited for tasks that involve complex non-linear relationships in unstructured data, like image and speech recognition, and have been successfully applied to a wide range of pattern recognition tasks. NNs may be implemented in computer vision to achieve facial recognition and object detection in self-driving cars, predictive modeling for the stock market, and recommendation modeling for advertisements. SPNs are more suited for tasks related to probabilistic inference involving structured data, and can be trained using maximum likelihood estimation and gradient descent. Applications of SPNs include robots in complex environments, data analysis in medical diagnosis and social sciences, and machine learning tasks.
 
-_Summary_
+### _Summary_
 
     In summary, SPNs are more focused on representing and reasoning about uncertainty, while neural networks revolve around learning from data and making predictions.  Arithmetic circuits are more general than SPNs, as the wider variety of functions provide higher expressivity. Each computational model can be useful in different contexts due to their underlying mechanisms, and may even be combined to take advantage of their complementary strengths. SPNs, ACs, and NNs are helpful tools in machine learning, but they are designed for different purposes and have varying strengths and weaknesses. 
 
