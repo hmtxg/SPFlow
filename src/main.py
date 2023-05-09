@@ -4,8 +4,8 @@ from spn.structure.StatisticalTypes import MetaType
 from spn.algorithms.RSPMNnewAlgo import RSPMNnewAlgo
 from spn.io.Graphics import plot_spn
 
-csv_path = "/home/htawashy/PycharmProjects/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
-df = pd.read_csv(csv_path, sep=",")
+csv_path = "/home/hannah/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
+df = pd.read_csv(csv_path, sep=",", header=None)
 train_data = df.values
 
 #Parameter Setting
@@ -28,7 +28,7 @@ template = rspmn.hard_em(train_data, template, False)
 
 #Plotting Learned Structure
 plot_spn(spmn_structure_two_time_steps, "RSPMN_Plots/frozenlakePlot.pdf", feature_labels=["State0", "Action0", "Reward0", "State1", "Action1", "Reward1"])
-plot_spn(top_layer, "RSPMN_Plots/frozenlake_topLayer.pdf", feature_labels=["State", "Action", "Reward"])
+plot_spn(top_network, "RSPMN_Plots/frozenlake_topLayer.pdf", feature_labels=["State", "Action", "Reward"])
 plot_spn(initial_template_network, "RSPMN_Plots/frozenlake_templateNet.pdf", feature_labels=["State", "Action", "Reward"])
 
 #MEU
@@ -36,6 +36,5 @@ num_of_iterations = 300
 meu_list, lls_list = rspmn.value_iteration(template, num_of_iterations)
 test_data = [0, np.nan, np.nan]
 test_data = np.array(test_data).reshape(1, len(test_data))
-meu = rspmn.meu_of_state(rspmn.template, test_data, meu_list, lls_list)[0][:,0]
+meu = rspmn.meu_of_state(rspmn.template, test_data, meu_list, lls_list)[0]
 print(meu)
-
