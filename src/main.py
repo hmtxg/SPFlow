@@ -1,10 +1,12 @@
 import pandas as pd
 import numpy as np
+import logging
 from spn.structure.StatisticalTypes import MetaType
 from spn.algorithms.RSPMNnewAlgo import RSPMNnewAlgo
 from spn.io.Graphics import plot_spn
+#logging.basicConfig(filename="truck.log", level=logging.DEBUG)
 
-csv_path = "/home/hannah/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
+csv_path = "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
 df = pd.read_csv(csv_path, sep=",", header=None)
 train_data = df.values
 
@@ -22,16 +24,17 @@ spmn_structure_two_time_steps, top_network, initial_template_network = rspmn.Ini
 
 
 #Learn Template Network
-print("LT Top")
+print("IT & TP Obtained, Learning IT to obtain FT")
 template = rspmn.InitialTemplate.template_network
 template = rspmn.hard_em(train_data, template, False)
 
 #Plotting Learned Structure
-plot_spn(spmn_structure_two_time_steps, "RSPMN_Plots/frozenlakePlot.pdf", feature_labels=["State0", "Action0", "Reward0", "State1", "Action1", "Reward1"])
-plot_spn(top_network, "RSPMN_Plots/frozenlake_topLayer.pdf", feature_labels=["State", "Action", "Reward"])
-plot_spn(initial_template_network, "RSPMN_Plots/frozenlake_templateNet.pdf", feature_labels=["State", "Action", "Reward"])
+#plot_spn(spmn_structure_two_time_steps, "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_Plots/FL2StepNA.pdf", feature_labels=["State0", "Action0", "Reward0", "State1", "Action1", "Reward1"])
+#plot_spn(top_network, "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTopNA.pdf", feature_labels=["State", "Action", "Reward"])
+#plot_spn(initial_template_network, "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTemplateNA.pdf", feature_labels=["State", "Action", "Reward"])
 
 #MEU
+print("MEU Calculations via value iteration")
 num_of_iterations = 300
 meu_list, lls_list = rspmn.value_iteration(template, num_of_iterations)
 test_data = [0, np.nan, np.nan]

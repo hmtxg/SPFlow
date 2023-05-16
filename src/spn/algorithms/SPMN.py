@@ -140,26 +140,34 @@ class SPMN:
                 curr_var_indices = list(
                                         range(len(curr_information_set_scope)))
 
-                exception = False
-                try:
-                    split_cols = get_split_cols_RDC_py()
-                    data_slices_prod = split_cols(remaining_vars_data, ds_context, remaining_vars_scope)
+                #exception = False
 
-                    logging.debug(f'{len(data_slices_prod)} slices found at data_slices_prod: ')
+                #INDEPENDENT DISTRIBUTION ALWAYS
+                print('Naive Split')
+                curr_vars_data = remaining_vars_data[:, curr_var_indices]
+                curr_vars_scope = list(curr_information_set_scope)
+                rest_data = np.delete(remaining_vars_data, curr_var_indices,axis=1)
+                rest_scope = np.delete(remaining_vars_scope, curr_var_indices).tolist()
+                data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],[rest_data, rest_scope, 1]]
+                # try:
+                #     split_cols = get_split_cols_RDC_py()
+                #     data_slices_prod = split_cols(remaining_vars_data, ds_context, remaining_vars_scope)
 
-                except:
-                    print(
-                        "Exception in clustering step, "
-                        "defaulting to independent distribution")
-                    exception = True
-                    curr_vars_data = remaining_vars_data[:, curr_var_indices]
-                    curr_vars_scope = list(curr_information_set_scope)
-                    rest_data = np.delete(remaining_vars_data, curr_var_indices,
-                                          axis=1)
-                    rest_scope = np.delete(remaining_vars_scope,
-                                           curr_var_indices).tolist()
-                    data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],
-                                        [rest_data, rest_scope, 1]]
+                #     logging.debug(f'{len(data_slices_prod)} slices found at data_slices_prod: ')
+
+                # except:
+                #     print(
+                #         "Exception in clustering step, "
+                #         "defaulting to independent distribution")
+                #     exception = True
+                #     curr_vars_data = remaining_vars_data[:, curr_var_indices]
+                #     curr_vars_scope = list(curr_information_set_scope)
+                #     rest_data = np.delete(remaining_vars_data, curr_var_indices,
+                #                           axis=1)
+                #     rest_scope = np.delete(remaining_vars_scope,
+                #                            curr_var_indices).tolist()
+                #     data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],
+                #                         [rest_data, rest_scope, 1]]
 
                 prod_children = []
                 next_remaining_vars_scope = []
