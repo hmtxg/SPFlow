@@ -140,45 +140,43 @@ class SPMN:
                 curr_var_indices = list(
                                         range(len(curr_information_set_scope)))
 
-                #exception = False
+                exception = False
+                try:
+                    split_cols = get_split_cols_RDC_py()
+                    data_slices_prod = split_cols(remaining_vars_data, ds_context, remaining_vars_scope)
 
-                #INDEPENDENT DISTRIBUTION ALWAYS
-                print('Naive Split')
-                curr_vars_data = remaining_vars_data[:, curr_var_indices]
-                curr_vars_scope = list(curr_information_set_scope)
-                rest_data = np.delete(remaining_vars_data, curr_var_indices,axis=1)
-                rest_scope = np.delete(remaining_vars_scope, curr_var_indices).tolist()
-                data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],[rest_data, rest_scope, 1]]
-                # try:
-                #     split_cols = get_split_cols_RDC_py()
-                #     data_slices_prod = split_cols(remaining_vars_data, ds_context, remaining_vars_scope)
+                    logging.debug(f'{len(data_slices_prod)} slices found at data_slices_prod: ')
 
-                #     logging.debug(f'{len(data_slices_prod)} slices found at data_slices_prod: ')
-
-                # except:
-                #     print(
-                #         "Exception in clustering step, "
-                #         "defaulting to independent distribution")
-                #     exception = True
-                #     curr_vars_data = remaining_vars_data[:, curr_var_indices]
-                #     curr_vars_scope = list(curr_information_set_scope)
-                #     rest_data = np.delete(remaining_vars_data, curr_var_indices,
-                #                           axis=1)
-                #     rest_scope = np.delete(remaining_vars_scope,
-                #                            curr_var_indices).tolist()
-                #     data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],
-                #                         [rest_data, rest_scope, 1]]
+                except:
+                    print(
+                        "Exception in slicing step, "
+                        "defaulting to independent distribution")
+                    exception = True
+                    curr_vars_data = remaining_vars_data[:, curr_var_indices]
+                    curr_vars_scope = list(curr_information_set_scope)
+                    rest_data = np.delete(remaining_vars_data, curr_var_indices,
+                                          axis=1)
+                    rest_scope = np.delete(remaining_vars_scope,
+                                           curr_var_indices).tolist()
+                    data_slices_prod = [[curr_vars_data, curr_vars_scope, 1],
+                                        [rest_data, rest_scope, 1]]
 
                 prod_children = []
                 next_remaining_vars_scope = []
                 independent_vars_scope = []
-
+                # mixed_slice = None
+                # print('RDC split, check if any slice has mixed vars & indp next vars section')
                 for correlated_var_set_cluster, correlated_var_set_scope, weight in data_slices_prod:
 
                     if any(var_scope in correlated_var_set_scope for var_scope in rest_set_scope):
 
                         next_remaining_vars_scope.extend(correlated_var_set_scope)
 
+                    # elif any(var_scope in correlated_var_set_scope for var_scope in rest_set_scope):
+                    #     #THIS IS A MIXED VAR SLICE, SOL #3
+                    #     mixed_slice = True
+                    #     next_remaining_vars_scope.extend(correlated_var_set_scope)
+                      
                     else:
                         # this variable set of current information set is
                         # not correlated to any variable in the rest set
@@ -262,7 +260,6 @@ class SPMN:
                 split_rows = get_split_rows_KMeans()    # from SPMNHelper.py
 
                 if self.cluster_by_curr_information_set:
-
                     curr_information_set_data = column_slice_data_by_scope(remaining_vars_data,
                                                                            remaining_vars_scope,
                                                                            curr_information_set_scope)
@@ -270,7 +267,12 @@ class SPMN:
                     ds_context_sum = get_ds_context(curr_information_set_data, curr_information_set_scope, self.params)
                     data_slices_sum, km_model = split_rows(curr_information_set_data, ds_context_sum,
                                                            curr_information_set_scope)
-
+                    if len(data_slices_sum)<2:
+                        #ONLY ONE CLUSTER MADE, RE-RUN. SOL #2
+                        while(len(data_slices_sum)<2):
+                            data_slices_sum, km_model = split_rows(curr_information_set_data, ds_context_sum,
+                                                           curr_information_set_scope)
+                            
                     logging.info(f'split clusters based on current information set {curr_information_set_scope}')
 
                 else:
@@ -331,7 +333,6 @@ class SPMN:
         self.set_next_operation('Any')
 
         self.spmn_structure = self.__learn_spmn_structure(data, remaining_vars_scope, curr_information_set_scope, index)
-
         Prune(self.spmn_structure)
         assign_ids(self.spmn_structure)
         rebuild_scopes_bottom_up(self.spmn_structure)
