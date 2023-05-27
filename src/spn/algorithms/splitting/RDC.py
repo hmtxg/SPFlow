@@ -6,7 +6,7 @@ Created on March 20, 2018
 
 import numpy as np
 from sklearn.cluster import KMeans
-from .Base import split_data_by_clusters, clusters_by_adjacency_matrix
+from spn.algorithms.splitting.Base import split_data_by_clusters, clusters_by_adjacency_matrix
 import logging
 import random
 
@@ -106,7 +106,7 @@ def get_split_rows_RDC(n_clusters=2, k=10, s=1 / 6, ohe=True, seed=17):
 import itertools
 
 from networkx.algorithms.components.connected import connected_components
-from networkx import from_numpy_array as from_numpy_matrix 
+from networkx.convert_matrix import from_numpy_array as from_numpy_matrix 
 import scipy.stats
 
 from sklearn.cross_decomposition import CCA
