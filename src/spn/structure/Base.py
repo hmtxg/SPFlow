@@ -211,8 +211,8 @@ class Context:
             else:
                 raise Exception("Unkown MetaType " + str(feature_meta_type))
 
-        #self.domains = np.asanyarray(domain)
-        self.domains = dict(zip(self.scope, domain))
+        self.domains = np.asanyarray(domain)
+        self.domains = dict(zip(self.scope, self.domains))
 
         return self
 
