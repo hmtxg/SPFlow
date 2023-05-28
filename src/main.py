@@ -6,7 +6,7 @@ from spn.algorithms.RSPMNnewAlgo import RSPMNnewAlgo
 from spn.io.Graphics import plot_spn
 #logging.basicConfig(filename="truck.log", level=logging.DEBUG)
 
-csv_path = "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
+csv_path = "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake2.5K.csv"
 df = pd.read_csv(csv_path, sep=",", header=None)
 train_data = df.values
 

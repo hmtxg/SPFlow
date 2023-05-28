@@ -270,6 +270,7 @@ class SPMN:
                     if len(data_slices_sum)<2:
                         #ONLY ONE CLUSTER MADE, RE-RUN. SOL #2
                         while(len(data_slices_sum)<2):
+                            print('STUCK')
                             data_slices_sum, km_model = split_rows(curr_information_set_data, ds_context_sum,
                                                            curr_information_set_scope)
                             
