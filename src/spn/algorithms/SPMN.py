@@ -14,7 +14,8 @@ import logging
 import numpy as np
 
 from spn.algorithms.TransformStructure import Prune
-
+#import warnings #IGNORE THE KMEANS WARNING OF ONLY MAKING 1 CLUSTER
+#warnings.filterwarnings('ignore')
 
 class SPMN:
 
