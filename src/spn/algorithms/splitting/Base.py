@@ -6,7 +6,7 @@ Created on March 20, 2018
 
 import numpy as np
 from networkx import connected_components
-from networkx import from_numpy_array
+from networkx import from_numpy_matrix
 
 from sklearn.feature_extraction.text import TfidfTransformer
 
@@ -21,9 +21,9 @@ def preproc(data, ds_context, pre_proc, ohe):
         f = None
         if pre_proc == "tf-idf":
             f = lambda data: TfidfTransformer().fit_transform(data)
-        elif pre_proc == "log+1":
+        elif ds_context == "log+1":
             f = lambda data: np.log(data + 1)
-        elif pre_proc == "sqrt":
+        elif ds_context == "sqrt":
             f = lambda data: np.sqrt(data)
 
         if f is not None:
@@ -66,7 +66,7 @@ def clusters_by_adjacency_matrix(adm, threshold, n_features):
     adm[adm > 0] = 1
 
     result = np.zeros(n_features)
-    for i, c in enumerate(connected_components(from_numpy_array(adm))):
+    for i, c in enumerate(connected_components(from_numpy_matrix(adm))):
         result[list(c)] = i + 1
 
     return result
