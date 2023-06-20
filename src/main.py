@@ -5,17 +5,17 @@ if __name__ == '__main__':
     from spn.structure.StatisticalTypes import MetaType
     from spn.algorithms.RSPMNnewAlgo import RSPMNnewAlgo
     from spn.io.Graphics import plot_spn
-    logging.basicConfig(filename="Maze.log", level=logging.DEBUG)
-    csv_path = "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_MDP_Datasets/Maze/Maze.csv"
+    logging.basicConfig(filename="FL.log", level=logging.DEBUG)
+    csv_path = "/home/ht65490/Desktop/SPFlow/src/spn/RSPMN_MDP_Datasets/FrozenLake/FrozenLake.csv"
     df = pd.read_csv(csv_path, sep=",", header=None)
     train_data = df.values
 
     #Parameter Setting
-    partial_order = [["state_x", "state_y"],["action"],["reward"]]
+    partial_order = [["state"],["action"],["reward"]]
     decision_nodes = ["action"]
     utility_nodes = ["reward"]
     feature_names = [var for var_set in partial_order for var in var_set]
-    meta_types = [MetaType.DISCRETE]*3+[MetaType.UTILITY]
+    meta_types = [MetaType.DISCRETE]*2+[MetaType.UTILITY]
 
     #Structure Learning
     rspmn = RSPMNnewAlgo(partial_order, decision_nodes, utility_nodes, feature_names, meta_types, cluster_by_curr_information_set=True, util_to_bin=False)
@@ -30,14 +30,14 @@ if __name__ == '__main__':
     #Plotting Learned Structure
     print('Plotting Networks')
     #plot_spn(spmn_structure_two_time_steps, "/Users/Hanna/OneDrive/Desktop/SPFlow/src/spn/RSPMN_Plots/FL2StepNA.pdf", feature_labels=["State0", "Action0", "Reward0", "State1", "Action1", "Reward1"])
-    #plot_spn(top_network, "/Users/Hanna/OneDrive/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTopNA.pdf", feature_labels=["State", "Action", "Reward"])
-    #plot_spn(template, "/Users/Hanna/OneDrive/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTemplateNA.pdf", feature_labels=["State", "Action", "Reward"])
+    plot_spn(top_network, "/Users/Hanna/OneDrive/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTopTest.pdf", feature_labels=["State", "Action", "Reward"])
+    plot_spn(template, "/Users/Hanna/OneDrive/Desktop/SPFlow/src/spn/RSPMN_Plots/FLTemplateTest.pdf", feature_labels=["State", "Action", "Reward"])
 
     #MEU
     print("MEU Calculations via value iteration")
-    num_of_iterations = 8
+    num_of_iterations = 300
     meu_list, lls_list = rspmn.value_iteration(template, num_of_iterations)
-    test_data = [0, 0, np.nan, np.nan]
+    test_data = [0, np.nan, np.nan]
     test_data = np.array(test_data).reshape(1, len(test_data))
     meu = rspmn.meu_of_state(rspmn.template, test_data, meu_list, lls_list)[0]
     print(meu)
