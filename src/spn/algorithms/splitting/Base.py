@@ -6,7 +6,7 @@ Created on March 20, 2018
 
 import numpy as np
 from networkx import connected_components
-from networkx import from_numpy_matrix
+from networkx import from_numpy_array as from_numpy_matrix
 
 from sklearn.feature_extraction.text import TfidfTransformer
 
