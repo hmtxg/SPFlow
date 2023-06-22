@@ -20,7 +20,7 @@ from spn.algorithms.TransformStructure import Prune
 class SPMN:
 
     def __init__(self, partial_order, decision_nodes, utility_node, feature_names,
-            meta_types, cluster_by_curr_information_set=False, util_to_bin=False):
+            meta_types, cluster_by_curr_information_set=True, util_to_bin=False):
 
         self.params = SPMNParams(
                 partial_order,
@@ -304,7 +304,7 @@ class SPMN:
 
         self.spmn_structure = self.__learn_spmn_structure(data, remaining_vars_scope, curr_information_set_scope, index)
 
-        # Prune(self.spmn_structure)
+        Prune(self.spmn_structure)
         return self.spmn_structure
 
 
